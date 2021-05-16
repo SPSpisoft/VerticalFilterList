@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> {
@@ -114,7 +116,13 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
             holder.vBase.setBackground(itemBox);
 
         holder.vTitle.setText(sitem.getmText());
-        holder.vIcon.setImageResource(sitem.getmIcon());
+        if(sitem.getmIconUrl() != null){
+            Glide.with(this.context)
+                    .load(sitem.getmIconUrl())
+                    .into(holder.vIcon);
+        }
+        else
+            holder.vIcon.setImageResource(sitem.getmIcon());
 
         holder.vIcon.getLayoutParams().height = icnSize;
         holder.vIcon.getLayoutParams().width = icnSize;

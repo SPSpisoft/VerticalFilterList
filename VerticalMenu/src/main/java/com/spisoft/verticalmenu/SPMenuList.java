@@ -155,11 +155,25 @@ public class SPMenuList extends LinearLayout {
 
     public static class sitems{
         private int mIcon;
+        private String mIconUrl = null;
         private String mText;
 
         public sitems(int micon, String mtext){
             this.mIcon = micon;
             this.mText = mtext;
+        }
+
+        public sitems(String miconUrl, String mtext){
+            this.mIconUrl = miconUrl;
+            this.mText = mtext;
+        }
+
+        public String getmIconUrl() {
+            return mIconUrl;
+        }
+
+        public void setmIconUrl(String mIconUrl) {
+            this.mIconUrl = mIconUrl;
         }
 
         public int getmIcon() {
