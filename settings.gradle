@@ -1,0 +1,3 @@
+include ':VerticalMenu'
+include ':app'
+rootProject.name = "VerticalFilterList"
