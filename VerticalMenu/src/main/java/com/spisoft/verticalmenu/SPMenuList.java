@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,12 +27,14 @@ public class SPMenuList extends LinearLayout {
     private MenuAdapter menuAdapter;
     private OnItemSelectListener mItemSelectListener;
     private float DEFAULT_SIZE = 100f;
-    private float itemWidth, itemHeight;
+    private float itemWidth, itemHeight, iconTopMargin;
     private int DEFAULT_TEXT_COLOR = Color.BLACK;
-    private int itemTextColor;
+    private int DEFAULT_TEXT_SEL_COLOR = Color.BLUE;
+    private int itemTextColor, itemSelTextColor;
     private int DEFAULT_TEXT_SIZE = 14;
-    private int itemTextSize;
+    private int itemTextSize, itemTextTypeface;
     private int DEFAULT_ICON_SIZE = 50;
+    private float DEFAULT_ICON_TOP_MARGIN = 10f;
     private int iconSize;
     private Drawable itemBox = null, itemSelBox = null;
     private LinearLayoutManager layoutManager;
@@ -85,9 +88,12 @@ public class SPMenuList extends LinearLayout {
         itemHeight = a.getDimension(R.styleable.SPMenuList_item_height, DEFAULT_SIZE);
 
         itemTextColor = a.getColor(R.styleable.SPMenuList_text_color, DEFAULT_TEXT_COLOR);
+        itemSelTextColor = a.getColor(R.styleable.SPMenuList_text_sel_color, DEFAULT_TEXT_SEL_COLOR);
         itemTextSize = a.getDimensionPixelSize(R.styleable.SPMenuList_text_size, DEFAULT_TEXT_SIZE);
+        itemTextTypeface = a.getResourceId(R.styleable.SPMenuList_android_typeface, 0);
 
         iconSize = a.getDimensionPixelSize(R.styleable.SPMenuList_icon_size, DEFAULT_ICON_SIZE);
+        iconTopMargin = a.getDimension(R.styleable.SPMenuList_icon_top_margin, DEFAULT_ICON_TOP_MARGIN);
 
         int drawableItemBox = a.getResourceId(R.styleable.SPMenuList_item_box, -1);
         if(drawableItemBox >= 0) itemBox = AppCompatResources.getDrawable(context, drawableItemBox);
@@ -126,7 +132,7 @@ public class SPMenuList extends LinearLayout {
         final float scale = getContext().getResources().getDisplayMetrics().density;
         menuAdapter = new MenuAdapter(mContext, ListItems, 0,
                 (int) (itemWidth * scale + 0.5f), (int) (itemHeight * scale + 0.5f),
-                itemTextColor, itemTextSize, iconSize, itemBox, itemSelBox, this.SelItem);
+                itemTextColor, itemTextSize, itemTextTypeface, iconSize, (int) (iconTopMargin * scale + 0.5f), itemBox, itemSelBox, itemSelTextColor, this.SelItem);
         MenuList.setAdapter(menuAdapter);
         menuAdapter.notifyDataSetChanged();
         menuAdapter.SetOnItemClickListener(new MenuAdapter.OnItemClickListener() {

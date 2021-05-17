@@ -6,8 +6,12 @@
         <attr name="item_width" format="dimension" />
         <attr name="item_height" format="dimension" />
         <attr name="text_size" format="dimension" />
+        <attr name="android:typeface"/>
+
         <attr name="text_color" format="color" />
+        <attr name="text_sel_color" format="color" />
         <attr name="icon_size" format="dimension" />
+        <attr name="icon_top_margin" format="dimension" />
 
         <attr name="item_box" format="reference" />
         <attr name="item_sel_box" format="reference" />

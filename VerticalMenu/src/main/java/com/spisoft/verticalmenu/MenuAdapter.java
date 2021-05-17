@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -31,8 +32,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
     public static int PropertyAdapterModeHead = 1;
     private OnItemClickListener mItemClickListener;
     private float txtSize;
-    private int txtColor;
-    private int icnSize;
+    private int itemTextTypeface;
+    private int txtColor, itemSelTextColor;
+    private int icnSize, iconTopMargin;
     private int lastPosition = 0;
     private Context context;
 
@@ -70,7 +72,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         }
     }
 
-    public MenuAdapter(Context context, List<SPMenuList.sitems> CodeList, int mode, int itemWidth, int itemHeight, int textColor, float textSize, int iconSize, Drawable itmBox,Drawable itemSelBox, int selPosition) {
+    public MenuAdapter(Context context, List<SPMenuList.sitems> CodeList, int mode, int itemWidth, int itemHeight, int textColor, float textSize,
+                       int itemTextTypeface, int iconSize, int iconTopMargin, Drawable itmBox, Drawable itemSelBox, int itemSelTextColor, int selPosition) {
         this.context = context;
 
         this.list = CodeList;
@@ -79,8 +82,11 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         this.iWidth = itemWidth;
         this.iHeight = itemHeight;
         this.txtColor = textColor;
+        this.itemSelTextColor = itemSelTextColor;
         this.txtSize = textSize;
+        this.itemTextTypeface = itemTextTypeface;
         this.icnSize = iconSize;
+        this.iconTopMargin = iconTopMargin;
 
         this.itemBox = itmBox;
         this.itemSelBox = itemSelBox;
@@ -127,9 +133,18 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         holder.vIcon.getLayoutParams().height = icnSize;
         holder.vIcon.getLayoutParams().width = icnSize;
 
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(0, iconTopMargin, 0, 0);
+        holder.vIcon.setLayoutParams(lp);
+
         holder.vTitle.setSelected(true);
-        holder.vTitle.setTextColor(txtColor);
+        if(position == sPosition)
+            holder.vTitle.setTextColor(itemSelTextColor);
+        else
+            holder.vTitle.setTextColor(txtColor);
         holder.vTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, txtSize);
+        if (itemTextTypeface > 0)
+            holder.vTitle.setTypeface(ResourcesCompat.getFont(context, itemTextTypeface));
 
         Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
         holder.itemView.startAnimation(animation);
