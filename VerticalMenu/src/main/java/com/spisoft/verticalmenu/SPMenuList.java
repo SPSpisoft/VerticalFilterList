@@ -3,6 +3,7 @@ package com.spisoft.verticalmenu;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -32,7 +33,8 @@ public class SPMenuList extends LinearLayout {
     private int DEFAULT_TEXT_SEL_COLOR = Color.BLUE;
     private int itemTextColor, itemSelTextColor;
     private int DEFAULT_TEXT_SIZE = 14;
-    private int itemTextSize, itemTextTypeface;
+    private int itemTextSize;
+    private Typeface textTypeface;
     private int DEFAULT_ICON_SIZE = 50;
     private float DEFAULT_ICON_TOP_MARGIN = 10f;
     private int iconSize;
@@ -90,7 +92,7 @@ public class SPMenuList extends LinearLayout {
         itemTextColor = a.getColor(R.styleable.SPMenuList_text_color, DEFAULT_TEXT_COLOR);
         itemSelTextColor = a.getColor(R.styleable.SPMenuList_text_sel_color, DEFAULT_TEXT_SEL_COLOR);
         itemTextSize = a.getDimensionPixelSize(R.styleable.SPMenuList_text_size, DEFAULT_TEXT_SIZE);
-        itemTextTypeface = a.getResourceId(R.styleable.SPMenuList_android_typeface, 0);
+//        itemTextTypeface = a.getResourceId(R.styleable.SPMenuList_android_typeface, 0);
 
         iconSize = a.getDimensionPixelSize(R.styleable.SPMenuList_icon_size, DEFAULT_ICON_SIZE);
         iconTopMargin = a.getDimension(R.styleable.SPMenuList_icon_top_margin, DEFAULT_ICON_TOP_MARGIN);
@@ -132,7 +134,7 @@ public class SPMenuList extends LinearLayout {
         final float scale = getContext().getResources().getDisplayMetrics().density;
         menuAdapter = new MenuAdapter(mContext, ListItems, 0,
                 (int) (itemWidth * scale + 0.5f), (int) (itemHeight * scale + 0.5f),
-                itemTextColor, itemTextSize, itemTextTypeface, iconSize, (int) (iconTopMargin * scale + 0.5f), itemBox, itemSelBox, itemSelTextColor, this.SelItem);
+                itemTextColor, itemTextSize, textTypeface, iconSize, (int) (iconTopMargin * scale + 0.5f), itemBox, itemSelBox, itemSelTextColor, this.SelItem);
         MenuList.setAdapter(menuAdapter);
         menuAdapter.notifyDataSetChanged();
         menuAdapter.SetOnItemClickListener(new MenuAdapter.OnItemClickListener() {
@@ -146,6 +148,12 @@ public class SPMenuList extends LinearLayout {
 
             }
         });
+        invalidate();
+        return this;
+    }
+
+    public SPMenuList setTypeFace(Typeface tf){
+        textTypeface = tf;
         invalidate();
         return this;
     }

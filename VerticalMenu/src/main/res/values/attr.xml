@@ -6,7 +6,7 @@
         <attr name="item_width" format="dimension" />
         <attr name="item_height" format="dimension" />
         <attr name="text_size" format="dimension" />
-        <attr name="android:typeface"/>
+<!--        <attr name="android:typeface"/>-->
 
         <attr name="text_color" format="color" />
         <attr name="text_sel_color" format="color" />

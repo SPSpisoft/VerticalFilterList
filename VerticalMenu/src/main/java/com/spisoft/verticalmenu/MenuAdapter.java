@@ -2,6 +2,7 @@ package com.spisoft.verticalmenu;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -32,7 +33,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
     public static int PropertyAdapterModeHead = 1;
     private OnItemClickListener mItemClickListener;
     private float txtSize;
-    private int itemTextTypeface;
+    private Typeface textTypeface;
     private int txtColor, itemSelTextColor;
     private int icnSize, iconTopMargin;
     private int lastPosition = 0;
@@ -73,7 +74,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
     }
 
     public MenuAdapter(Context context, List<SPMenuList.sitems> CodeList, int mode, int itemWidth, int itemHeight, int textColor, float textSize,
-                       int itemTextTypeface, int iconSize, int iconTopMargin, Drawable itmBox, Drawable itemSelBox, int itemSelTextColor, int selPosition) {
+                       Typeface textTypeface, int iconSize, int iconTopMargin, Drawable itmBox, Drawable itemSelBox, int itemSelTextColor, int selPosition) {
         this.context = context;
 
         this.list = CodeList;
@@ -84,7 +85,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         this.txtColor = textColor;
         this.itemSelTextColor = itemSelTextColor;
         this.txtSize = textSize;
-        this.itemTextTypeface = itemTextTypeface;
+        this.textTypeface = textTypeface;
         this.icnSize = iconSize;
         this.iconTopMargin = iconTopMargin;
 
@@ -133,7 +134,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         holder.vIcon.getLayoutParams().height = icnSize;
         holder.vIcon.getLayoutParams().width = icnSize;
 
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(0, iconTopMargin, 0, 0);
         holder.vIcon.setLayoutParams(lp);
 
@@ -143,8 +144,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         else
             holder.vTitle.setTextColor(txtColor);
         holder.vTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, txtSize);
-        if (itemTextTypeface > 0)
-            holder.vTitle.setTypeface(ResourcesCompat.getFont(context, itemTextTypeface));
+        if (textTypeface != null)
+            holder.vTitle.setTypeface(textTypeface);
 
         Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
         holder.itemView.startAnimation(animation);
