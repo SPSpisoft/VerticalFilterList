@@ -28,6 +28,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
     private final int iWidth, iHeight;
     private final Drawable itemBox, itemSelBox;
     private final int sPosition;
+    private final int lastPosition;
     private List<SPMenuList.sitems> list;
     public static int PropertyAdapterModeList = 0;
     public static int PropertyAdapterModeHead = 1;
@@ -36,7 +37,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
     private Typeface textTypeface;
     private int txtColor, itemSelTextColor;
     private int icnSize, iconTopMargin;
-    private int lastPosition = 0;
     private Context context;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -73,10 +73,11 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         }
     }
 
-    public MenuAdapter(Context context, List<SPMenuList.sitems> CodeList, int mode, int itemWidth, int itemHeight, int textColor, float textSize,
+    public MenuAdapter(Context context, List<SPMenuList.sitems> CodeList, int lastPosition, int mode, int itemWidth, int itemHeight, int textColor, float textSize,
                        Typeface textTypeface, int iconSize, int iconTopMargin, Drawable itmBox, Drawable itemSelBox, int itemSelTextColor, int selPosition) {
         this.context = context;
 
+        this.lastPosition = lastPosition;
         this.list = CodeList;
         this.mode = mode;
 
@@ -134,9 +135,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         holder.vIcon.getLayoutParams().height = icnSize;
         holder.vIcon.getLayoutParams().width = icnSize;
 
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(0, iconTopMargin, 0, 0);
-        holder.vIcon.setLayoutParams(lp);
+//        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//        lp.(0, iconTopMargin, 0, 0);
+//        holder.vIcon.setLayoutParams(lp);
+        holder.vIcon.setPadding(0,0,0,iconTopMargin);
 
         holder.vTitle.setSelected(true);
         if(position == sPosition)
@@ -147,10 +149,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         if (textTypeface != null)
             holder.vTitle.setTypeface(textTypeface);
 
-        Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
-        holder.itemView.startAnimation(animation);
+        if(position != lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+            holder.itemView.startAnimation(animation);
+        }
 
-        lastPosition = position;
+//        lastPosition = position;
 
     }
 
