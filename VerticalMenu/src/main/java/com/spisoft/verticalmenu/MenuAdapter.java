@@ -149,8 +149,13 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         if (textTypeface != null)
             holder.vTitle.setTypeface(textTypeface);
 
-        if(position != lastPosition) {
+        if(position != lastPosition)
+        {
             Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+            holder.itemView.startAnimation(animation);
+        }
+        else {
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.left_to_right);
             holder.itemView.startAnimation(animation);
         }
 
