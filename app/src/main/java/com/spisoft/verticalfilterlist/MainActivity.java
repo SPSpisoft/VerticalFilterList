@@ -19,6 +19,14 @@ public class MainActivity extends AppCompatActivity {
 
         TextView SText = findViewById(R.id.txt);
         SPMenuList SPL = findViewById(R.id.splist);
+
+        SPL.SetOnItemSelectListener(new SPMenuList.OnItemSelectListener() {
+            @Override
+            public void onItemSelect(int position) {
+                SText.setText(""+position);
+            }
+        });
+
         List<SPMenuList.sitems> mm = new ArrayList<>();
         mm.add(new SPMenuList.sitems(R.drawable.ic_launcher_background, "Text1"));
         mm.add(new SPMenuList.sitems(R.drawable.ic_android_black_24dp, "Text2"));
@@ -37,14 +45,7 @@ public class MainActivity extends AppCompatActivity {
         mm.add(new SPMenuList.sitems(R.drawable.ic_baseline_run_circle_24, "Text9"));
         mm.add(new SPMenuList.sitems(R.drawable.ic_baseline_run_circle_24, "Text9"));
         mm.add(new SPMenuList.sitems(R.drawable.ic_baseline_run_circle_24, "Text9"));
-        SPL.listItems(mm);
-
-        SPL.SetOnItemClickListener(new SPMenuList.OnItemSelectListener() {
-            @Override
-            public void onItemSelect(int position) {
-                SText.setText(""+position);
-            }
-        }, 0);
+        SPL.listItems(mm, 5);
 
 
     }

@@ -111,7 +111,7 @@ public class SPMenuList extends LinearLayout {
         this.SelItem = citem;
         invalidate();
 //        menuAdapter.notifyDataSetChanged();
-        listItems(ListItems);
+        listItems(ListItems, this.SelItem);
 //        layoutManager.smoothScrollToPosition(MenuList, null , citem);
 //        layoutManager.setSmoothScrollbarEnabled(true);
         if(MenuList.getHeight() > 0)
@@ -128,7 +128,7 @@ public class SPMenuList extends LinearLayout {
         return this.SelItem;
     }
 
-    public SPMenuList listItems(List<sitems> items){
+    public SPMenuList listItems(List<sitems> items, int defaultSel ){
         this.ListItems = items;
 //        if(itemHeight == 0) itemHeight = MenuList.getHeight()/ListItems.size();
         final float scale = getContext().getResources().getDisplayMetrics().density;
@@ -148,7 +148,11 @@ public class SPMenuList extends LinearLayout {
 
             }
         });
+        if(defaultSel >= 0 && defaultSel != SelItem){
+            selItem(defaultSel);
+        }
         invalidate();
+
         return this;
     }
 
@@ -162,9 +166,8 @@ public class SPMenuList extends LinearLayout {
         void onItemSelect( int position);
     }
 
-    public void SetOnItemClickListener(final OnItemSelectListener mItemSelectListener, int defaultSel) {
+    public void SetOnItemSelectListener(final OnItemSelectListener mItemSelectListener) {
         this.mItemSelectListener = mItemSelectListener;
-        selItem(defaultSel);
     }
 
     public static class sitems{
